@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const config = require("../config.json");
 
 function utils() {}
@@ -15,6 +16,17 @@ utils.prototype.skipLog = (req, res) => {
     return true;
   }
   return false;
+};
+
+// Creating a token valid based on the duration specified in the config file
+utils.prototype.getToken = function() {
+  return jwt.sign(
+    {
+      exp: Math.floor(Date.now() / 1000) + config.tokenExpiry,
+      data: config.secret
+    },
+    config.secret
+  );
 };
 
 module.exports = new utils();
