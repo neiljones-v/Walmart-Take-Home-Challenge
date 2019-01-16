@@ -1,0 +1,37 @@
+<div class="card" ng-show="activeItem.length != []">
+  <div class="card-body">
+    <div class="row col-12">
+      <h4>{{ activeItem.brandName }} {{ activeItem.modelNumber }}</h4>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-3">
+        <img ng-src="{{ activeItem.mediumImage }}" class="img-thumbnail" />
+      </div>
+      <div class="col-9">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            Sale Price: ${{ activeItem.salePrice }}
+          </li>
+          <li class="list-group-item">
+            Online availability: {{ activeItem.availableOnline }}
+          </li>
+          <li class="list-group-item">
+            Category: {{ activeItem.categoryPath }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr />
+    <div class="row col-12">
+      <p class="lead text-muted">{{ activeItem.shortDescription }}</p>
+    </div>
+  </div>
+</div>
+<div class="card" ng-hide="activeItem.length != []">
+  <div class="card-body">
+    <div class="alert alert-warning" role="alert">
+      Select an item from the table to view product information
+    </div>
+  </div>
+</div>

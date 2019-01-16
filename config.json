@@ -1,5 +1,17 @@
 {
-    "host": "0.0.0.0",
-    "port": "3000"
+  "host": "0.0.0.0",
+  "port": "3000",
+  "secret": "walmart",
+  "tokenExpiry": 1000,
+  "securePaths": ["/api/token"],
+  "apiPaths": ["/api/"],
+  "files": {
+    "itemIds": "client/resources/files/items.csv"
+  },
+  "api": {
+    "walmart": {
+      "keys": "kjybrqfdgp3u4yv2qzcnjndj",
+      "limit": 20
+    }
+  }
 }
-  
