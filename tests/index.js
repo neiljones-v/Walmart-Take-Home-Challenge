@@ -11,6 +11,27 @@ describe("Configuration file", function() {
   });
 });
 
+// Checking to see if the Walmart API key is present in the configuration file
+describe("API Key", function() {
+  it("API key should be present in order to make API calls", function() {
+    assert.notEqual(config.api.walmart.keys, "");
+  });
+});
+
+// Checking to see if the API query limit is defined in the configuration file
+describe("API query Limit", function() {
+  it("The maximum number of items that can be queried at a time is 20", function() {
+    assert.equal(config.api.walmart.limit, 20);
+  });
+});
+
+// Checking to see if the walmart catalogue list is provided
+describe("Walmart catalogue list", function() {
+  it(".csv file containing the list of ids from the walmart catalogue", function() {
+    assert.notEqual(config.files.itemIds, "");
+  });
+});
+
 // Testing the server
 describe("loading express", function() {
   let server;
@@ -38,5 +59,44 @@ describe("loading express", function() {
         token = res.text;
         done();
       });
+  });
+
+  // Creating a new token
+  it("Calling /api/token/create to create a token", function testSearch(done) {
+    supertest(server)
+      .get("/api/token/create")
+      .end((err, res) => {
+        token = res.text;
+        done();
+      });
+  });
+
+  // Querying the search API without any parameters
+  it("Querying /api/search without any parameters", function testSearch(done) {
+    supertest(server)
+      .get("/api/search")
+      .set({ Authorization: token })
+      .end((err, res) => {
+        assert.equal(res.body.length, 0);
+        done();
+      });
+  });
+
+  // Querying the search API with the keyword - backpack
+  it("Querying /api/search with 'backpack'", function testSearch(done) {
+    supertest(server)
+      .get("/api/search?keyword=backpack")
+      .set({ Authorization: token })
+      .end((err, res) => {
+        assert.equal(res.body.length, 3);
+        done();
+      });
+  });
+
+  // Testing for an invalid path
+  it("Invalid path check", function testPath(done) {
+    supertest(server)
+      .get("/test")
+      .expect(404, done);
   });
 });

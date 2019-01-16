@@ -1,7 +1,11 @@
+const fs = require("fs");
 const path = require("path");
-const utils = require("./server/utils");
+const async = require("async");
+const csv = require("csv-reader");
 const morgan = require("morgan");
+const request = require("request");
 const express = require("express");
+const utils = require("./server/utils");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -27,7 +31,7 @@ app.use(morgan("short", { skip: utils.skipLog }));
 require("./server/routes.js")(app, path);
 
 // API definitions
-require("./server/api.js")(app, config, utils);
+require("./server/api.js")(app, config, request, fs, csv, async, utils);
 
 let server = app.listen(port, host, () => {
   console.log("\tApplication running on - " + host + ":" + port);
