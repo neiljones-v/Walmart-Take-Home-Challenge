@@ -142,6 +142,47 @@ utils.prototype.stringCleanUp = function(string) {
   return result;
 };
 
+utils.prototype.validate = function(req, res, next) {
+  let validRequest = true;
+  let processPath = true;
+
+  config.securePaths.forEach(securePath => {
+    if (req.url.startsWith(securePath)) {
+      processPath = false;
+    }
+  });
+  try {
+    if (processPath) {
+      config.apiPaths.forEach(path => {
+        if (req.url.startsWith(path)) {
+          try {
+            if (req.headers !== undefined) {
+              var decoded = jwt.verify(
+                req.headers.authorization,
+                config.secret
+              );
+
+              if (decoded.data != config.secret) {
+                validRequest = false;
+              }
+            }
+          } catch (exception) {
+            //   console.log(exception);
+            validRequest = false;
+          }
+        }
+      });
+    }
+
+    if (validRequest) next();
+    else {
+      res.sendStatus(403).send();
+    }
+  } catch (exception) {
+    res.sendStatus(403).send();
+  }
+};
+
 // Extening the property of the string data type to replace characters based on a regular expression
 String.prototype.replaceAll = function(search, replacement) {
   var target = this;

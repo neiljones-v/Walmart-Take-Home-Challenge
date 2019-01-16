@@ -71,6 +71,14 @@ describe("loading express", function() {
       });
   });
 
+  // Querying the search API with an invalid token
+  it("Querying /api/search without an invalid token", function testSearch(done) {
+    supertest(server)
+      .get("/api/search")
+      .set({ Authorization: "wrong token" })
+      .expect(403, done);
+  });
+
   // Querying the search API without any parameters
   it("Querying /api/search without any parameters", function testSearch(done) {
     supertest(server)

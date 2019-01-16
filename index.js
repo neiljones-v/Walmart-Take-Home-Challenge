@@ -27,6 +27,9 @@ app.use(express.static(__dirname + "/client"));
 // Logging requests made to the application
 app.use(morgan("short", { skip: utils.skipLog }));
 
+// Middleware to validate all the requests made to the application
+app.use(utils.validate);
+
 // Route definitions
 require("./server/routes.js")(app, path);
 
