@@ -1,0 +1,33 @@
+<form ng-submit="search(keyword)">
+  <div class="card border-secondary">
+    <div class="input-group input-group-lg">
+      <input
+        class="form-control py-2 border"
+        type="text"
+        placeholder="Enter the keyword"
+        id="search"
+        ng-model="keyword"
+      />
+      <span class="input-group-append">
+        <button class="btn btn-outline-secondary border" type="submit">
+          Search
+        </button>
+        <button
+          class="btn btn-outline-primary border"
+          type="button"
+          ng-click="showAll()"
+        >
+          Show All
+        </button>
+        <button
+          class="btn btn-outline-danger border"
+          type="button"
+          ng-click="resetSearch()"
+        >
+          Reset
+        </button>
+      </span>
+    </div>
+  </div>
+</form>
+<hr />

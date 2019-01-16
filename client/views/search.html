@@ -1,0 +1,24 @@
+<div ng-init="initalize()" class="pt-4">
+  <div ng-show="loading"><div class="loader"></div></div>
+  <div ng-hide="loading">
+    <div class="">
+      <div ng-include src="'./views/partials/search_box.html'"></div>
+    </div>
+    <div class="row">
+      <div class="col" ng-hide="data.length > 0 || noResult">
+        <div class="alert alert-warning" role="alert">
+          Enter a search criteria to view the results
+        </div>
+      </div>
+      <div class="col" ng-show="noResult">
+        <div class="alert alert-info" role="alert">No results to display</div>
+      </div>
+      <div class="col" ng-show="data.length > 0">
+        <div ng-include src="'./views/partials/results.html'"></div>
+      </div>
+      <div class="col" ng-show="data.length > 0">
+        <div ng-include src="'./views/partials/item.html'"></div>
+      </div>
+    </div>
+  </div>
+</div>
