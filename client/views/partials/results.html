@@ -1,0 +1,46 @@
+<div class=" card">
+  <div class="card-body">
+    <div ng-show="data.length > 0">
+      <div class="alert alert-dark" role="alert">
+        <span ng-show="keyword != ''">
+          Showing results for: {{ keyword }}
+        </span>
+        <span ng-hide="keyword != ''"> Showing all items </span>
+      </div>
+
+      <hr />
+      <table datatable="ng" class="row-border hover">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Customer rating</th>
+            <th>Price</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            ng-repeat="d in data"
+            ng-click="rowSelect(d.itemId)"
+            ng-class="{'table-primary': d.active}"
+          >
+            <td>
+              <span> {{ d.name }} </span>
+            </td>
+            <td>
+              <span>{{
+                d.customerRating === undefined ? "-" : d.customerRating
+              }}</span>
+            </td>
+            <td>${{ d.salePrice }}</td>
+            <td>
+              <span>{{
+                d.stock == "Available" ? "Available" : "Not Available"
+              }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
